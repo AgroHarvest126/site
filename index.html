@@ -1,258 +1,223 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>SoulGuard — автономный мониторинг почвы</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <style>
-        :root {
-            --green: #2e7d32;
-            --light-green: #e8f5e9;
-            --dark: #1b1b1b;
-            --gray: #555;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        body {
-            color: var(--dark);
-            background: #ffffff;
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(135deg, #2e7d32, #66bb6a);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            font-size: 18px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .fund {
-            background: rgba(255,255,255,0.15);
-            margin-top: 30px;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-
-        section {
-            padding: 70px 20px;
-            max-width: 1100px;
-            margin: auto;
-        }
-
-        section h2 {
-            font-size: 32px;
-            margin-bottom: 20px;
-            color: var(--green);
-        }
-
-        section p {
-            color: var(--gray);
-            margin-bottom: 15px;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .card {
-            background: var(--light-green);
-            padding: 25px;
-            border-radius: 15px;
-        }
-
-        .card h3 {
-            margin-bottom: 10px;
-            color: var(--green);
-        }
-
-        .tech {
-            background: #f9f9f9;
-        }
-
-        ul {
-            padding-left: 20px;
-            color: var(--gray);
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .contact {
-            background: linear-gradient(135deg, #1b5e20, #2e7d32);
-            color: white;
-            border-radius: 20px;
-            padding: 40px;
-        }
-
-        .contact p {
-            color: #e0e0e0;
-        }
-
-        form {
-            margin-top: 20px;
-            display: grid;
-            gap: 15px;
-            max-width: 500px;
-        }
-
-        input, textarea {
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            font-size: 14px;
-        }
-
-        button {
-            background: #ffffff;
-            color: var(--green);
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        footer {
-            text-align: center;
-            padding: 25px;
-            font-size: 14px;
-            color: #777;
-        }
-
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 28px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SoilGuard — автономный энергохарвестер</title>
+  <meta name="description" content="SoilGuard — автономная система мониторинга почвы на основе почвенного гальванического элемента. Энергонезависимые датчики влажности и температуры." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1020;
+      --bg-soft:#121833;
+      --card:#151c3d;
+      --text:#e8ebff;
+      --muted:#aab0ff;
+      --accent:#6cf2c2;
+      --accent-2:#6aa7ff;
+      --danger:#ff6a6a;
+      --radius:18px;
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:radial-gradient(1200px 600px at 20% -10%, #1a2357 0%, transparent 60%), radial-gradient(1200px 600px at 100% 10%, #0f7b8a 0%, transparent 55%), var(--bg); color:var(--text); font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial;}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+    header{position:sticky;top:0;backdrop-filter: blur(10px);background:linear-gradient(to bottom, rgba(11,16,32,.75), rgba(11,16,32,.35));border-bottom:1px solid rgba(255,255,255,.08);z-index:10}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.3px}
+    .badge{padding:6px 10px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#061012;font-weight:700}
+    .nav a{opacity:.85}
+    .nav a:hover{opacity:1}
+    .hero{padding:80px 0 40px}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);box-shadow:var(--shadow)}
+    h1{font-size:clamp(34px,5vw,56px);line-height:1.05;margin:0 0 16px}
+    .lead{font-size:18px;color:var(--muted)}
+    .cta{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap}
+    .btn{padding:14px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:#0e1538;color:var(--text);font-weight:600;cursor:pointer;transition:.25s}
+    .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#061012;border:none}
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+    .stat{padding:18px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.12)}
+    .stat b{font-size:28px}
+    section{padding:48px 0}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{padding:22px;border-radius:18px;background:var(--card);border:1px solid rgba(255,255,255,.12)}
+    .card h3{margin:0 0 8px}
+    .list{display:grid;gap:10px}
+    .pill{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:999px;background:rgba(108,242,194,.12);border:1px solid rgba(108,242,194,.35);color:var(--accent)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .table{width:100%;border-collapse:collapse}
+    .table th,.table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.12);text-align:left}
+    .muted{color:var(--muted)}
+    .timeline{display:grid;gap:12px}
+    .step{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:flex-start}
+    .dot{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#061012;font-weight:800}
+    footer{padding:40px 0;border-top:1px solid rgba(255,255,255,.12);background:linear-gradient(to top, rgba(11,16,32,.8), rgba(11,16,32,.4))}
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease}
+    .reveal.show{opacity:1;transform:none}
+    @media(max-width:900px){.hero-grid,.cards,.grid-2,.stats{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
-
 <header>
-    <h1>SoulGuard</h1>
-    <p>
-        Автономный энергохарвестер на основе почвенного гальванического элемента
-        для питания подземных датчиков влажности и температуры почвы
-    </p>
-
-    <div class="fund">
-        <!-- СЮДА ВСТАВИТЬ ЛОГОТИПЫ ФОНДА -->
-        <strong>
-            Проект реализован при поддержке Фонда содействия инновациям
-            в рамках программы «Студенческий стартап» мероприятия
-            «Платформа университетского технологического предпринимательства»
-            федерального проекта «Технологии».
-        </strong>
-    </div>
+  <div class="container nav">
+    <div class="logo"><span class="badge">SoilGuard</span> автономный энергохарвестер</div>
+    <nav style="display:flex;gap:14px">
+      <a href="#product">Продукт</a>
+      <a href="#tech">Технология</a>
+      <a href="#market">Рынок</a>
+      <a href="#docs">Документы</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </div>
 </header>
 
-<section>
-    <h2>О продукте</h2>
-    <p>
-        SoulGuard — это автономная система мониторинга почвы, которая без внешних
-        источников питания измеряет и передаёт данные о влажности и температуре
-        для точного и экономного полива.
-    </p>
-
-    <div class="cards">
-        <div class="card">
-            <h3>Проблема</h3>
-            <p>
-                Потери урожая и перерасход воды из-за отсутствия оперативных
-                данных о состоянии почвы.
-            </p>
+<main>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="glass" style="padding:28px">
+        <h1>Автономные датчики почвы без батарей</h1>
+        <p class="lead">SoilGuard — система мониторинга влажности и температуры почвы на основе почвенного гальванического элемента. Работает без внешнего питания до 5 лет.</p>
+        <div class="cta">
+          <a class="btn primary" href="#contacts">Оставить заявку</a>
+          <a class="btn" href="#tech">Как это работает</a>
         </div>
-        <div class="card">
-            <h3>Решение</h3>
-            <p>
-                Использование естественного электрохимического потенциала почвы
-                для питания измерительной электроники.
-            </p>
+        <div class="stats">
+          <div class="stat"><b>−70%</b><div class="muted">стоимость vs аналоги</div></div>
+          <div class="stat"><b>5 лет</b><div class="muted">без обслуживания</div></div>
+          <div class="stat"><b>0</b><div class="muted">батарей и отходов</div></div>
         </div>
-        <div class="card">
-            <h3>Результат</h3>
-            <p>
-                Полная автономность до 3–5 лет без батарей и обслуживания.
-            </p>
-        </div>
+      </div>
+      <div class="glass" style="padding:28px">
+        <span class="pill">Студенческий стартап · VI очередь</span>
+        <h3 style="margin-top:12px">Проблема</h3>
+        <ul class="list">
+          <li>Потери урожая из‑за отсутствия данных</li>
+          <li>Дорогие и энергозависимые датчики</li>
+        </ul>
+        <h3>Решение</h3>
+        <p class="muted">Используем естественный электрохимический потенциал почвы для питания электроники и передачи данных.</p>
+      </div>
     </div>
-</section>
+  </section>
 
-<section class="tech">
-    <h2>Технология</h2>
-    <ul>
-        <li>Почвенный гальванический элемент (медь + цинк)</li>
-        <li>Суперконденсатор для накопления энергии</li>
-        <li>Энергоэффективный микроконтроллер</li>
-        <li>Беспроводная передача данных</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Области применения</h2>
-    <div class="cards">
-        <div class="card">Сельское хозяйство и агрохолдинги</div>
-        <div class="card">Тепличные хозяйства</div>
-        <div class="card">Лесовосстановление и питомники</div>
-        <div class="card">Муниципальное озеленение</div>
+  <section id="product">
+    <div class="container">
+      <h2>О продукте</h2>
+      <div class="cards">
+        <div class="card reveal"><h3>Что измеряет</h3><p>Влажность и температуру почвы с беспроводной передачей данных.</p></div>
+        <div class="card reveal"><h3>Где применяется</h3><p>Фермы, теплицы, агрохолдинги, лесовосстановление, городское озеленение.</p></div>
+        <div class="card reveal"><h3>Установка</h3><p>Без электросетей и солнечных панелей. Быстро и экологично.</p></div>
+      </div>
     </div>
-</section>
+  </section>
 
-<section>
-    <h2>Преимущества</h2>
-    <ul>
-        <li>Энергонезависимость</li>
-        <li>Стоимость в 5–6 раз ниже аналогов</li>
-        <li>Простая установка</li>
-        <li>Экологичность — отсутствие батарей</li>
-    </ul>
-</section>
+  <section id="tech">
+    <div class="container grid-2">
+      <div class="card reveal">
+        <h2>Технология</h2>
+        <p>Почвенный гальванический элемент генерирует энергию из химических реакций в грунте и питает датчики.</p>
+        <ul class="list">
+          <li>Энергонезависимость</li>
+          <li>Постоянный ток</li>
+          <li>Экологичность</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h2>Преимущества</h2>
+        <ul class="list">
+          <li>В 5–6 раз дешевле аналогов</li>
+          <li>До 5 лет без обслуживания</li>
+          <li>Надёжность при разной влажности</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-<section class="contact">
-    <h2>Контакты</h2>
-    <p><strong>Жилин Руслан Сергеевич</strong></p>
-    <p>Email: zhilinruslan228@gmail.com</p>
-    <p>Телефон: +7 963 388 70 17</p>
+  <section id="market">
+    <div class="container grid-2">
+      <div class="card reveal">
+        <h2>Рынок</h2>
+        <table class="table">
+          <tr><th>PAM</th><td>Мировой рынок агромониторинга ~7 млрд $</td></tr>
+          <tr><th>TAM</th><td>РФ и СНГ ~22 млрд ₽</td></tr>
+          <tr><th>SAM</th><td>Сенсоры орошения 4–5 млрд ₽</td></tr>
+          <tr><th>SOM</th><td>1–3 региона РФ: 250–300 млн ₽</td></tr>
+        </table>
+      </div>
+      <div class="card reveal">
+        <h2>Монетизация</h2>
+        <ul class="list">
+          <li>Продажа датчиков: 5 000 ₽ / шт</li>
+          <li>Подписка: 500 ₽/мес до 10 Га</li>
+          <li>Окупаемость &lt; 2 лет (500 датчиков)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <form>
-        <input type="text" placeholder="Ваше имя">
-        <input type="email" placeholder="Email">
-        <textarea rows="4" placeholder="Сообщение"></textarea>
-        <button type="submit">Отправить</button>
-    </form>
-</section>
+  <section>
+    <div class="container">
+      <h2>План реализации</h2>
+      <div class="timeline">
+        <div class="step reveal"><div class="dot">1</div><div><b>R&D</b><p class="muted">Расчёты, испытания, прототип.</p></div></div>
+        <div class="step reveal"><div class="dot">2</div><div><b>Пилоты</b><p class="muted">Полевые испытания, агрономы.</p></div></div>
+        <div class="step reveal"><div class="dot">3</div><div><b>Масштаб</b><p class="muted">Производство и партнёрства.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="docs">
+    <div class="container grid-2">
+      <div class="card reveal">
+        <h2>Юридические сведения</h2>
+        <p class="muted">ООО «АГРОХАРВЕСТ», ОГРН 1252600015370, ИНН 2636224803</p>
+        <p class="muted">Адрес: 355008, Ставропольский край, г. Ставрополь, ул. Орджоникидзе, д. 2/1</p>
+        <p class="muted">Директор: Жилин Руслан Сергеевич</p>
+        <p class="muted">ОКВЭД: 27.20; 26.51.6</p>
+      </div>
+      <div class="card reveal">
+        <h2>Патенты и база</h2>
+        <p class="muted">Патент RU2522526C1. Энергохарвестинг из окружающей среды.</p>
+        <p class="muted">Разработан прототип, методики расчёта мощности.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacts">
+    <div class="container grid-2">
+      <div class="card reveal">
+        <h2>Контакты</h2>
+        <p><b>Email:</b> zhilinruslan228@gmail.com</p>
+        <p><b>Телефон:</b> +7 963 388‑70‑17</p>
+        <p class="muted">Заявка: СтС‑505183</p>
+      </div>
+      <div class="card reveal">
+        <h2>Заявка</h2>
+        <form onsubmit="event.preventDefault(); alert('Заявка отправлена!');">
+          <input required placeholder="Имя" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:#0e1538;color:var(--text);margin-bottom:10px" />
+          <input required placeholder="Email или телефон" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:#0e1538;color:var(--text);margin-bottom:10px" />
+          <textarea placeholder="Сообщение" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:#0e1538;color:var(--text);min-height:90px;margin-bottom:10px"></textarea>
+          <button class="btn primary" type="submit">Отправить</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
 
 <footer>
-    © 2025 SoulGuard · Студенческий стартап · Заявка СтС-505183
+  <div class="container muted">© 2025 SoilGuard · ООО «АГРОХАРВЕСТ»</div>
 </footer>
 
+<script>
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
 </body>
 </html>
