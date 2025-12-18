@@ -3,29 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SoilGuard — автономный мониторинг почвы</title>
-  <meta name="description" content="SoilGuard — автономная система мониторинга почвы без батарей. Энергонезависимые датчики влажности и температуры." />
+  <title>AgroHarvest — автономный мониторинг почвы</title>
+  <meta name="description" content="AgroHarvest — автономная система мониторинга почвы без батарей. Энергонезависимые датчики влажности и температуры." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      /* Темная цветовая палитра */
-      --bg: #0a0a0f;
-      --bg-card: #11111f;
-      --bg-surface: #1a1a2e;
-      --text: #e0e0ff;
-      --text-muted: #a0a0c0;
-      --accent: #00d9ff;
-      --accent-glow: rgba(0, 217, 255, 0.3);
-      --accent-secondary: #6cf2c2;
-      --green: #2e7d32;
-      --green-dark: #1b5e20;
-      --green-glow: rgba(46, 125, 50, 0.2);
-      --radius: 16px;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --bg: #0c0c14;
+      --bg-card: #151522;
+      --bg-surface: #1e1e2d;
+      --text: #ffffff;
+      --text-muted: #b0b0d0;
+      --accent: #2ecc71;
+      --accent-secondary: #3498db;
+      --accent-glow: rgba(46, 204, 113, 0.3);
+      --green: #27ae60;
+      --green-dark: #1e8449;
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      --transition: all 0.3s ease;
     }
     
     * {
@@ -35,162 +33,27 @@
     }
     
     html, body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       scroll-behavior: smooth;
-      background: var(--bg);
+      background: linear-gradient(135deg, #0c0c14 0%, #12121c 30%, #151522 100%);
       color: var(--text);
       overflow-x: hidden;
-      position: relative;
+      line-height: 1.6;
     }
     
-    /* Параллакс-эффект для фона */
-    .parallax-bg {
+    /* Простой стильный фон */
+    .bg-pattern {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 120vh;
-      z-index: -2;
-      background: 
-        radial-gradient(circle at 20% 30%, var(--green-glow) 0%, transparent 40%),
-        radial-gradient(circle at 80% 20%, rgba(0, 217, 255, 0.1) 0%, transparent 40%),
-        linear-gradient(to bottom, #0a0a0f 0%, #0f1520 40%, #142029 100%);
-      background-attachment: fixed;
-      transform: translateZ(-1px) scale(1.2);
-    }
-    
-    /* Эффект слоев почвы для параллакса */
-    .soil-layers {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 300vh;
+      height: 100%;
       z-index: -1;
-      pointer-events: none;
-    }
-    
-    .soil-layer {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-repeat: repeat;
-      background-size: 200px 200px;
-      opacity: 0.1;
-    }
-    
-    .layer-1 {
+      opacity: 0.05;
       background-image: 
-        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 2px, transparent 2px),
-        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 2px, transparent 2px);
-      background-size: 100px 100px;
-      animation: float 40s infinite linear;
-      opacity: 0.15;
-    }
-    
-    .layer-2 {
-      background-image: 
-        radial-gradient(circle at 10% 90%, rgba(108, 242, 194, 0.1) 1px, transparent 1px),
-        radial-gradient(circle at 90% 10%, rgba(108, 242, 194, 0.1) 1px, transparent 1px);
-      background-size: 150px 150px;
-      animation: float 60s infinite linear reverse;
-      opacity: 0.1;
-    }
-    
-    @keyframes float {
-      0% { background-position: 0 0; }
-      100% { background-position: 200px 200px; }
-    }
-    
-    /* Анимация "закапывания" датчика */
-    .sensor-animation {
-      position: relative;
-      width: 100%;
-      height: 400px;
-      margin: 60px auto;
-      perspective: 1000px;
-    }
-    
-    .soil-container {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      margin: 0 auto;
-      transform-style: preserve-3d;
-    }
-    
-    .soil {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to bottom, #8B4513 0%, #654321 30%, #3D2B1F 70%, #1a1a2e 100%);
-      border-radius: 50%;
-      box-shadow: 
-        inset 0 0 50px rgba(0,0,0,0.8),
-        0 20px 50px rgba(0,0,0,0.6);
-      transform: rotateX(75deg);
-      overflow: hidden;
-    }
-    
-    .sensor {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) translateZ(50px);
-      width: 40px;
-      height: 120px;
-      background: linear-gradient(to bottom, #2c3e50, #34495e);
-      border-radius: 10px;
-      box-shadow: 
-        0 0 20px var(--accent-glow),
-        inset 0 0 10px rgba(255,255,255,0.1);
-      z-index: 10;
-      animation: pulse 4s infinite ease-in-out;
-    }
-    
-    .sensor::before {
-      content: '';
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      height: 15px;
-      background: var(--accent);
-      border-radius: 5px;
-      box-shadow: 0 0 10px var(--accent);
-    }
-    
-    .sensor::after {
-      content: '';
-      position: absolute;
-      bottom: 20px;
-      left: 10px;
-      width: 20px;
-      height: 20px;
-      background: var(--accent-secondary);
-      border-radius: 50%;
-      animation: blink 2s infinite;
-    }
-    
-    .soil-line {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: rgba(255,255,255,0.1);
-      transform: rotate(45deg);
-      transform-origin: left;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) translateZ(50px) scale(1); }
-      50% { transform: translate(-50%, -50%) translateZ(50px) scale(1.05); }
-    }
-    
-    @keyframes blink {
-      0%, 50%, 100% { opacity: 0.3; }
-      25%, 75% { opacity: 1; }
+        radial-gradient(circle at 10% 20%, rgba(46, 204, 113, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 50% 50%, rgba(46, 204, 113, 0.05) 0%, transparent 30%);
     }
     
     /* Header */
@@ -199,11 +62,11 @@
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(10, 10, 15, 0.9);
+      background: rgba(12, 12, 20, 0.95);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       z-index: 1000;
-      padding: 15px 0;
+      padding: 20px 0;
     }
     
     .container {
@@ -241,8 +104,6 @@
     nav a {
       color: var(--text-muted);
       font-weight: 500;
-      position: relative;
-      padding: 5px 0;
       transition: var(--transition);
     }
     
@@ -250,27 +111,11 @@
       color: var(--accent);
     }
     
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.3s;
-    }
-    
-    nav a:hover::after {
-      width: 100%;
-    }
-    
     /* Hero Section */
     .hero {
       padding: 180px 0 100px;
-      position: relative;
       text-align: center;
-      overflow: hidden;
+      position: relative;
     }
     
     .hero h1 {
@@ -278,18 +123,20 @@
       font-weight: 900;
       margin-bottom: 20px;
       line-height: 1.1;
-      background: linear-gradient(45deg, var(--text), var(--accent));
+    }
+    
+    .hero .highlight {
+      background: linear-gradient(45deg, var(--accent), var(--accent-secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px var(--accent-glow);
+      display: block;
     }
     
     .lead {
       font-size: 18px;
       color: var(--text-muted);
-      max-width: 600px;
+      max-width: 700px;
       margin: 0 auto 40px;
-      line-height: 1.6;
     }
     
     /* Stats */
@@ -297,41 +144,23 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
-      margin: 50px auto;
+      margin: 60px auto;
       max-width: 900px;
     }
     
     .stat {
-      background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.05);
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.05);
       border-radius: var(--radius);
       padding: 30px;
       text-align: center;
-      backdrop-filter: blur(10px);
       transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .stat::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
-      transition: left 0.6s;
-    }
-    
-    .stat:hover::before {
-      left: 100%;
     }
     
     .stat:hover {
       transform: translateY(-5px);
-      border-color: var(--accent-glow);
-      box-shadow: 0 15px 40px rgba(0, 217, 255, 0.1);
+      border-color: var(--accent);
+      box-shadow: var(--shadow);
     }
     
     .stat b {
@@ -340,7 +169,6 @@
       font-weight: 900;
       color: var(--accent);
       margin-bottom: 10px;
-      text-shadow: 0 0 20px var(--accent-glow);
     }
     
     .stat span {
@@ -351,7 +179,6 @@
     /* Sections */
     section {
       padding: 100px 0;
-      position: relative;
     }
     
     h2 {
@@ -360,25 +187,14 @@
       margin-bottom: 50px;
       text-align: center;
       color: var(--text);
-      position: relative;
-      display: inline-block;
     }
     
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-      border-radius: 2px;
-    }
-    
-    .section-content {
-      max-width: 1200px;
-      margin: 0 auto;
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 60px;
+      font-size: 18px;
     }
     
     /* Cards */
@@ -389,35 +205,17 @@
     }
     
     .card {
-      background: linear-gradient(145deg, var(--bg-card), var(--bg-surface));
-      border: 1px solid rgba(255,255,255,0.05);
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.05);
       border-radius: var(--radius);
       padding: 30px;
       transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-      transform: scaleX(0);
-      transition: transform 0.3s;
-    }
-    
-    .card:hover::before {
-      transform: scaleX(1);
     }
     
     .card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      border-color: rgba(0, 217, 255, 0.2);
+      border-color: var(--accent);
+      box-shadow: var(--shadow);
     }
     
     .card h3 {
@@ -429,16 +227,143 @@
       gap: 10px;
     }
     
-    .card-icon {
-      width: 40px;
-      height: 40px;
-      background: rgba(0, 217, 255, 0.1);
-      border-radius: 10px;
+    /* Market Section - Графики */
+    .market-container {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 40px;
+      margin-top: 40px;
+    }
+    
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .market-item {
+      text-align: center;
+      padding: 20px;
+      background: var(--bg-surface);
+      border-radius: var(--radius);
+    }
+    
+    .market-item b {
+      display: block;
+      font-size: 32px;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    
+    .market-charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 40px;
+    }
+    
+    .chart-container {
+      background: var(--bg-surface);
+      border-radius: var(--radius);
+      padding: 30px;
+    }
+    
+    .chart-title {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+    
+    /* График PAM/TAM/SAM/SOM */
+    .market-bars {
+      display: flex;
+      align-items: flex-end;
+      height: 200px;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .bar {
+      flex: 1;
+      background: linear-gradient(to top, var(--accent), var(--accent-secondary));
+      border-radius: 6px 6px 0 0;
+      position: relative;
+      transition: var(--transition);
+    }
+    
+    .bar:hover {
+      transform: scaleY(1.05);
+    }
+    
+    .bar-label {
+      position: absolute;
+      bottom: -30px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    
+    .bar-value {
+      position: absolute;
+      top: -30px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-weight: bold;
+      color: var(--accent);
+    }
+    
+    .bar.pam { height: 90%; }
+    .bar.tam { height: 70%; }
+    .bar.sam { height: 50%; }
+    .bar.som { height: 30%; }
+    
+    /* Круговая диаграмма */
+    .pie-chart {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+      position: relative;
+      border-radius: 50%;
+      background: conic-gradient(
+        #2ecc71 0% 40%,
+        #3498db 40% 70%,
+        #9b59b6 70% 85%,
+        #e74c3c 85% 100%
+      );
+    }
+    
+    .pie-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background: var(--bg-surface);
+      border-radius: 50%;
+    }
+    
+    .legend {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .legend-item {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: var(--accent);
+      gap: 10px;
+    }
+    
+    .legend-color {
+      width: 15px;
+      height: 15px;
+      border-radius: 3px;
     }
     
     /* Timeline */
@@ -482,7 +407,6 @@
       font-size: 24px;
       font-weight: 900;
       z-index: 1;
-      box-shadow: 0 0 30px var(--accent-glow);
     }
     
     .step-content {
@@ -504,20 +428,15 @@
     }
     
     .contact-info {
-      background: linear-gradient(145deg, var(--bg-card), var(--bg-surface));
+      background: var(--bg-card);
       border-radius: var(--radius);
       padding: 40px;
-      border: 1px solid rgba(255,255,255,0.05);
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
     
     .contact-info h2 {
       text-align: left;
       margin-bottom: 30px;
-    }
-    
-    .contact-info h2::after {
-      left: 0;
-      transform: none;
     }
     
     .contact-item {
@@ -541,8 +460,8 @@
     input, textarea {
       width: 100%;
       padding: 15px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       font-size: 16px;
       font-family: inherit;
@@ -553,8 +472,7 @@
     input:focus, textarea:focus {
       outline: none;
       border-color: var(--accent);
-      box-shadow: 0 0 20px var(--accent-glow);
-      background: rgba(0, 217, 255, 0.02);
+      background: rgba(46, 204, 113, 0.02);
     }
     
     button {
@@ -567,26 +485,18 @@
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
-      position: relative;
-      overflow: hidden;
     }
     
     button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px var(--accent-glow);
-    }
-    
-    button:active {
-      transform: translateY(0);
+      box-shadow: var(--shadow);
     }
     
     /* Footer */
     footer {
-      background: rgba(10, 10, 15, 0.95);
-      border-top: 1px solid rgba(255,255,255,0.05);
+      background: rgba(12, 12, 20, 0.98);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
       padding: 60px 0 30px;
-      position: relative;
-      z-index: 1;
     }
     
     .footer-content {
@@ -611,7 +521,7 @@
     .copyright {
       text-align: center;
       padding-top: 30px;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
       color: var(--text-muted);
       font-size: 14px;
     }
@@ -630,34 +540,29 @@
     
     /* Responsive */
     @media (max-width: 992px) {
-      .hero-grid, .contact-grid, .footer-content {
+      .contact-grid, .footer-content {
         grid-template-columns: 1fr;
       }
       
-      .stats {
+      .market-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .market-charts {
+        grid-template-columns: 1fr;
       }
       
       nav {
         display: none;
       }
-      
-      .mobile-menu {
-        display: block;
-      }
-      
-      .sensor-animation {
-        height: 300px;
-      }
-      
-      .soil-container {
-        width: 250px;
-        height: 250px;
-      }
     }
     
     @media (max-width: 768px) {
       .stats {
+        grid-template-columns: 1fr;
+      }
+      
+      .market-grid {
         grid-template-columns: 1fr;
       }
       
@@ -705,18 +610,13 @@
   </style>
 </head>
 <body>
-  <!-- Параллакс-фон -->
-  <div class="parallax-bg"></div>
-  <div class="soil-layers">
-    <div class="soil-layer layer-1"></div>
-    <div class="soil-layer layer-2"></div>
-  </div>
+  <div class="bg-pattern"></div>
   
   <header>
     <div class="container nav">
       <div class="logo">
-        <i class="fas fa-satellite-dish"></i>
-        <span>SoilGuard</span>
+        <i class="fas fa-seedling"></i>
+        <span>AgroHarvest</span>
       </div>
       <nav>
         <a href="#product">Продукт</a>
@@ -732,21 +632,11 @@
   <main>
     <section class="hero">
       <div class="container">
-        <h1>Автономный мониторинг почвы<br>без батарей</h1>
-        <p class="lead">SoilGuard — энергонезависимая система измерения влажности и температуры почвы на основе почвенного гальванического элемента.</p>
-        
-        <!-- Анимация закапывания датчика -->
-        <div class="sensor-animation">
-          <div class="soil-container">
-            <div class="soil">
-              <div class="soil-line"></div>
-              <div class="soil-line" style="transform: rotate(135deg);"></div>
-              <div class="soil-line" style="transform: rotate(225deg);"></div>
-              <div class="soil-line" style="transform: rotate(315deg);"></div>
-            </div>
-            <div class="sensor"></div>
-          </div>
-        </div>
+        <h1>
+          <span class="highlight">Автономный мониторинг почвы</span>
+          <br>без батарей и обслуживания
+        </h1>
+        <p class="lead">AgroHarvest — энергонезависимая система измерения влажности и температуры почвы на основе почвенного гальванического элемента. Работает 5+ лет без замены элементов питания.</p>
         
         <div class="stats">
           <div class="stat reveal">
@@ -758,8 +648,8 @@
             <span>лет без обслуживания</span>
           </div>
           <div class="stat reveal">
-            <b>0</b>
-            <span>батарей и отходов</span>
+            <b class="counter" data-target="40" data-duration="3000">0</b>
+            <span>экономии воды</span>
           </div>
         </div>
         
@@ -770,116 +660,215 @@
     </section>
     
     <section id="product">
-      <div class="container section-content">
+      <div class="container">
         <h2>Наш продукт</h2>
+        <p class="section-subtitle">Автономные датчики почвы, которые питаются от самой почвы. Никаких батарей, проводов и обслуживания.</p>
+        
         <div class="cards">
           <div class="card reveal">
-            <h3><div class="card-icon"><i class="fas fa-tint"></i></div> Точные измерения</h3>
-            <p>Влажность и температура почвы с точностью до 2%. Данные обновляются каждые 15 минут и передаются в облако.</p>
+            <h3><i class="fas fa-tachometer-alt"></i> Точные измерения</h3>
+            <p>Влажность почвы (±2%), температура (±0.5°C). Данные передаются каждые 15 минут через LoRaWAN сеть.</p>
           </div>
           
           <div class="card reveal">
-            <h3><div class="card-icon"><i class="fas fa-bolt"></i></div> Энергонезависимость</h3>
-            <p>Питание от почвенного гальванического элемента. Полная автономность 5+ лет без батарей и солнечных панелей.</p>
+            <h3><i class="fas fa-battery-slash"></i> Без батарей</h3>
+            <p>Почвенный гальванический элемент вырабатывает достаточно энергии для работы датчика. Срок службы 5+ лет.</p>
           </div>
           
           <div class="card reveal">
-            <h3><div class="card-icon"><i class="fas fa-wifi"></i></div> Передача данных</h3>
-            <p>Беспроводная передача на расстояние до 2 км. Интеграция с мобильным приложением и веб-панелью.</p>
+            <h3><i class="fas fa-cloud-upload-alt"></i> Облачная аналитика</h3>
+            <p>Все данные в реальном времени доступны через веб-панель и мобильное приложение. Прогнозы полива и рекомендации.</p>
           </div>
         </div>
       </div>
     </section>
     
-    <section id="tech" style="background: rgba(0,0,0,0.3);">
-      <div class="container section-content">
+    <section id="tech" style="background: rgba(0,0,0,0.2);">
+      <div class="container">
         <h2>Технология</h2>
+        <p class="section-subtitle">Используем электрохимические реакции в почве для генерации энергии и питания измерительной электроники.</p>
+        
         <div class="cards">
           <div class="card reveal">
-            <h3><div class="card-icon"><i class="fas fa-atom"></i></div> Почвенный элемент</h3>
-            <p>Используем разность потенциалов между медными и цинковыми электродами в почве для генерации энергии.</p>
+            <h3><i class="fas fa-bolt"></i> Генерация энергии</h3>
+            <p>Разность потенциалов между медным и цинковым электродом в почве создает постоянный ток 0.5-1.2В, достаточный для питания датчика.</p>
           </div>
           
           <div class="card reveal">
-            <h3><div class="card-icon"><i class="fas fa-car-battery"></i></div> Накопление энергии</h3>
-            <p>Суперконденсатор накапливает энергию для работы микроконтроллера и сенсоров даже в сухой почве.</p>
+            <h3><i class="fas fa-microchip"></i> Энергоэффективная электроника</h3>
+            <p>Специальный микроконтроллер с ультранизким энергопотреблением (3 мкА в режиме сна). Суперконденсатор для накопления энергии.</p>
           </div>
           
           <div class="card reveal">
-            <h3><div class="card-icon"><i class="fas fa-microchip"></i></div> Энергоэффективность</h3>
-            <p>Специальный микроконтроллер с ультранизким энергопотреблением и интеллектуальным управлением питанием.</p>
+            <h3><i class="fas fa-signal"></i> Беспроводная связь</h3>
+            <p>Передача данных на расстояние до 5 км через технологию LoRaWAN. Шлюз собирает данные с сотен датчиков на площади до 1000 Га.</p>
           </div>
         </div>
       </div>
     </section>
     
     <section id="advantages">
-      <div class="container section-content">
+      <div class="container">
         <h2>Преимущества</h2>
+        <p class="section-subtitle">Почему фермеры выбирают AgroHarvest вместо традиционных решений</p>
+        
         <div class="cards">
           <div class="card reveal">
-            <h3><div class="card-icon"><i class="fas fa-money-bill-wave"></i></div> Экономия</h3>
-            <p>В 5-6 раз дешевле импортных аналогов. Снижение затрат на полив до 40% за счет точного контроля.</p>
+            <h3><i class="fas fa-ruble-sign"></i> Экономия</h3>
+            <p>В 5-6 раз дешевле импортных аналогов. Снижение затрат на полив до 40% за счет точного контроля влажности почвы.</p>
           </div>
           
           <div class="card reveal">
-            <h3><div class="card-icon"><i class="fas fa-leaf"></i></div> Экологичность</h3>
-            <p>Полное отсутствие батарей и токсичных компонентов. Биоразлагаемые материалы конструкции.</p>
+            <h3><i class="fas fa-tree"></i> Экологичность</h3>
+            <p>Нет батарей, которые нужно менять и утилизировать. Полностью автономная работа без обслуживания.</p>
           </div>
           
           <div class="card reveal">
-            <h3><div class="card-icon"><i class="fas fa-shield-alt"></i></div> Надёжность</h3>
-            <p>Работает при любой погоде от -30°C до +60°C. Водонепроницаемость IP68. Гарантия 3 года.</p>
+            <h3><i class="fas fa-cogs"></i> Надежность</h3>
+            <p>Работает в диапазоне -30°C до +60°C. Степень защиты IP68 (полная водонепроницаемость). Гарантия 3 года.</p>
+          </div>
+          
+          <div class="card reveal">
+            <h3><i class="fas fa-chart-line"></i> Увеличение урожая</h3>
+            <p>Средний прирост урожайности 15-25% за счет оптимизации полива и предотвращения стресса растений.</p>
           </div>
         </div>
       </div>
     </section>
     
-    <section id="timeline" style="background: rgba(0,0,0,0.3);">
-      <div class="container section-content">
+    <section id="market" style="background: rgba(0,0,0,0.2);">
+      <div class="container">
+        <h2>Рынок</h2>
+        <p class="section-subtitle">Мировой рынок агротехники растет на 12% ежегодно. AgroHarvest занимает уникальную нишу автономных решений.</p>
+        
+        <div class="market-container reveal">
+          <div class="market-grid">
+            <div class="market-item">
+              <b>PAM</b>
+              <span>Мировой рынок<br>агромониторинга</span>
+              <div style="margin-top: 10px; font-size: 14px; color: var(--accent);">~7 млрд $</div>
+            </div>
+            
+            <div class="market-item">
+              <b>TAM</b>
+              <span>Рынок РФ и СНГ<br>точного земледелия</span>
+              <div style="margin-top: 10px; font-size: 14px; color: var(--accent);">~22 млрд ₽</div>
+            </div>
+            
+            <div class="market-item">
+              <b>SAM</b>
+              <span>Сенсоры орошения<br>и мониторинга почвы</span>
+              <div style="margin-top: 10px; font-size: 14px; color: var(--accent);">~4-5 млрд ₽</div>
+            </div>
+            
+            <div class="market-item">
+              <b>SOM</b>
+              <span>Пилотные регионы<br>(Ставрополье, Кубань)</span>
+              <div style="margin-top: 10px; font-size: 14px; color: var(--accent);">~250-300 млн ₽</div>
+            </div>
+          </div>
+          
+          <div class="market-charts">
+            <div class="chart-container">
+              <div class="chart-title">Объем рынка (PAM → SOM)</div>
+              <div class="market-bars">
+                <div class="bar pam">
+                  <div class="bar-value">PAM</div>
+                  <div class="bar-label">7 млрд $</div>
+                </div>
+                <div class="bar tam">
+                  <div class="bar-value">TAM</div>
+                  <div class="bar-label">22 млрд ₽</div>
+                </div>
+                <div class="bar sam">
+                  <div class="bar-value">SAM</div>
+                  <div class="bar-label">5 млрд ₽</div>
+                </div>
+                <div class="bar som">
+                  <div class="bar-value">SOM</div>
+                  <div class="bar-label">300 млн ₽</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="chart-container">
+              <div class="chart-title">Доля рынка по сегментам</div>
+              <div class="pie-chart">
+                <div class="pie-center"></div>
+              </div>
+              <div class="legend">
+                <div class="legend-item">
+                  <div class="legend-color" style="background: #2ecc71;"></div>
+                  <span>Зерновые (40%)</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color" style="background: #3498db;"></div>
+                  <span>Овощи (30%)</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color" style="background: #9b59b6;"></div>
+                  <span>Технические (15%)</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-color" style="background: #e74c3c;"></div>
+                  <span>Другие (15%)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="timeline">
+      <div class="container">
         <h2>Этапы реализации</h2>
+        <p class="section-subtitle">Дорожная карта проекта от прототипа до серийного производства</p>
+        
         <div class="timeline">
           <div class="step reveal">
-            <div class="dot">1</div>
+            <div class="dot">Q3<br>2024</div>
             <div class="step-content">
-              <h3>R&D и прототип</h3>
-              <p>Расчёты, лабораторные испытания, создание рабочего прототипа и тестирование в контролируемых условиях.</p>
+              <h3>Прототип и испытания</h3>
+              <p>Лабораторные тесты, разработка рабочего прототипа, проверка технологии в различных типах почв.</p>
             </div>
           </div>
           
           <div class="step reveal">
-            <div class="dot">2</div>
+            <div class="dot">Q4<br>2024</div>
             <div class="step-content">
-              <h3>Полевые испытания</h3>
-              <p>Тестирование на реальных полях, сбор данных по разным типам почв, оптимизация работы в различных условиях.</p>
+              <h3>Пилотные проекты</h3>
+              <p>Установка первых 50 датчиков на фермах Ставропольского края. Сбор данных и обратной связи от агрономов.</p>
             </div>
           </div>
           
           <div class="step reveal">
-            <div class="dot">3</div>
+            <div class="dot">Q1<br>2025</div>
             <div class="step-content">
-              <h3>Пилотные внедрения</h3>
-              <p>Работа с первыми клиентами, получение обратной связи, доработка продукта на основе реального опыта.</p>
+              <h3>Серийный выпуск</h3>
+              <p>Запуск мелкосерийного производства (1000 датчиков/месяц). Выход на рынки Краснодарского края и Ростовской области.</p>
             </div>
           </div>
           
           <div class="step reveal">
-            <div class="dot">4</div>
+            <div class="dot">Q4<br>2025</div>
             <div class="step-content">
               <h3>Масштабирование</h3>
-              <p>Серийное производство, выход на рынок РФ и СНГ, развитие партнёрской сети и экспансия.</p>
+              <p>Расширение на весь Южный федеральный округ. Выход на рынки Казахстана и Беларуси. Производство 5000+ датчиков/месяц.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
     
-    <section id="contacts">
+    <section id="contacts" style="background: rgba(0,0,0,0.2);">
       <div class="container">
         <h2>Контакты</h2>
+        <p class="section-subtitle">Свяжитесь с нами для пилотного тестирования или получения коммерческого предложения</p>
+        
         <div class="contact-grid">
           <div class="contact-info reveal">
-            <h2>Свяжитесь с нами</h2>
+            <h2>Контактная информация</h2>
             <div class="contact-item">
               <i class="fas fa-user"></i>
               <div>
@@ -912,16 +901,17 @@
               </div>
             </div>
             
-            <div style="margin-top: 30px; padding: 20px; background: rgba(0, 217, 255, 0.05); border-radius: 12px; border: 1px solid rgba(0, 217, 255, 0.1);">
-              <p><i class="fas fa-award"></i> <strong>Проект поддержан:</strong></p>
-              <p>Фондом содействия инновациям</p>
-              <p>Программа «Студенческий стартап»</p>
-              <p>Заявка СтС-505183</p>
+            <div class="contact-item">
+              <i class="fas fa-award"></i>
+              <div>
+                <strong>Поддержка проекта</strong>
+                <p>Фонд содействия инновациям<br>Программа «Студенческий стартап»<br>Заявка СтС-505183</p>
+              </div>
             </div>
           </div>
           
           <div class="reveal">
-            <h2 style="text-align: left; margin-bottom: 30px;">Оставить заявку</h2>
+            <h2>Оставить заявку</h2>
             <form onsubmit="event.preventDefault(); submitForm();">
               <input type="text" placeholder="Ваше имя" required>
               <input type="email" placeholder="Email" required>
@@ -941,22 +931,24 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-section">
-          <h3>SoilGuard</h3>
-          <p>Автономные системы мониторинга почвы для сельского хозяйства. Технология будущего уже здесь.</p>
+          <h3>AgroHarvest</h3>
+          <p>Автономные системы мониторинга почвы для точного земледелия. Технология будущего уже здесь.</p>
+          <p><i class="fas fa-seedling"></i> Без батарей. Без проводов. Без обслуживания.</p>
         </div>
         
         <div class="footer-section">
           <h3>Технологии</h3>
           <p>Почвенный гальванический элемент</p>
           <p>Энергоэффективная электроника</p>
-          <p>Беспроводные сети LPWAN</p>
+          <p>LoRaWAN беспроводная связь</p>
+          <p>Облачная аналитика</p>
         </div>
         
         <div class="footer-section">
           <h3>Контакты</h3>
-          <p>agroharveststav@gmail.com</p>
-          <p>+7 963 388‑70‑17</p>
-          <p>Ставрополь, Россия</p>
+          <p><i class="fas fa-envelope"></i> agroharveststav@gmail.com</p>
+          <p><i class="fas fa-phone"></i> +7 963 388‑70‑17</p>
+          <p><i class="fas fa-map-marker-alt"></i> Ставрополь, Россия</p>
         </div>
         
         <div class="footer-section">
@@ -964,11 +956,12 @@
           <p>ООО «АГРОХАРВЕСТ»</p>
           <p>ОГРН 1252600015370</p>
           <p>ИНН 2636224803</p>
+          <p>ОКВЭД: 27.20; 26.51.6</p>
         </div>
       </div>
       
       <div class="copyright">
-        <p>© 2025 SoilGuard. Все права защищены. Проект реализован при поддержке Фонда содействия инновациям.</p>
+        <p>© 2025 AgroHarvest. Все права защищены. Проект реализован при поддержке Фонда содействия инновациям в рамках программы «Студенческий стартап».</p>
       </div>
     </div>
   </footer>
@@ -992,21 +985,6 @@
           element.textContent = Math.floor(current);
         }
       }, 16);
-    }
-    
-    // Параллакс-эффект при скролле
-    function updateParallax() {
-      const scrolled = window.pageYOffset;
-      const parallaxBg = document.querySelector('.parallax-bg');
-      const soilLayers = document.querySelector('.soil-layers');
-      
-      if (parallaxBg) {
-        parallaxBg.style.transform = `translateY(${scrolled * 0.5}px)`;
-      }
-      
-      if (soilLayers) {
-        soilLayers.style.transform = `translateY(${scrolled * 0.3}px)`;
-      }
     }
     
     // Анимация появления элементов
@@ -1038,10 +1016,6 @@
       document.querySelectorAll('.reveal').forEach(el => {
         revealObserver.observe(el);
       });
-      
-      // Параллакс-эффект
-      window.addEventListener('scroll', updateParallax);
-      updateParallax();
       
       // Плавный скролл
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
