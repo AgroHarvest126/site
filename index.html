@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>SoulGuard — автономный мониторинг почвы</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root {
+            --green: #2e7d32;
+            --light-green: #e8f5e9;
+            --dark: #1b1b1b;
+            --gray: #555;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            color: var(--dark);
+            background: #ffffff;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2e7d32, #66bb6a);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .fund {
+            background: rgba(255,255,255,0.15);
+            margin-top: 30px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        section {
+            padding: 70px 20px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--green);
+        }
+
+        section p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--light-green);
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: var(--green);
+        }
+
+        .tech {
+            background: #f9f9f9;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: var(--gray);
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .contact {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .contact p {
+            color: #e0e0e0;
+        }
+
+        form {
+            margin-top: 20px;
+            display: grid;
+            gap: 15px;
+            max-width: 500px;
+        }
+
+        input, textarea {
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+        }
+
+        button {
+            background: #ffffff;
+            color: var(--green);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>SoulGuard</h1>
+    <p>
+        Автономный энергохарвестер на основе почвенного гальванического элемента
+        для питания подземных датчиков влажности и температуры почвы
+    </p>
+
+    <div class="fund">
+        <!-- СЮДА ВСТАВИТЬ ЛОГОТИПЫ ФОНДА -->
+        <strong>
+            Проект реализован при поддержке Фонда содействия инновациям
+            в рамках программы «Студенческий стартап» мероприятия
+            «Платформа университетского технологического предпринимательства»
+            федерального проекта «Технологии».
+        </strong>
+    </div>
+</header>
+
+<section>
+    <h2>О продукте</h2>
+    <p>
+        SoulGuard — это автономная система мониторинга почвы, которая без внешних
+        источников питания измеряет и передаёт данные о влажности и температуре
+        для точного и экономного полива.
+    </p>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Проблема</h3>
+            <p>
+                Потери урожая и перерасход воды из-за отсутствия оперативных
+                данных о состоянии почвы.
+            </p>
+        </div>
+        <div class="card">
+            <h3>Решение</h3>
+            <p>
+                Использование естественного электрохимического потенциала почвы
+                для питания измерительной электроники.
+            </p>
+        </div>
+        <div class="card">
+            <h3>Результат</h3>
+            <p>
+                Полная автономность до 3–5 лет без батарей и обслуживания.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="tech">
+    <h2>Технология</h2>
+    <ul>
+        <li>Почвенный гальванический элемент (медь + цинк)</li>
+        <li>Суперконденсатор для накопления энергии</li>
+        <li>Энергоэффективный микроконтроллер</li>
+        <li>Беспроводная передача данных</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Области применения</h2>
+    <div class="cards">
+        <div class="card">Сельское хозяйство и агрохолдинги</div>
+        <div class="card">Тепличные хозяйства</div>
+        <div class="card">Лесовосстановление и питомники</div>
+        <div class="card">Муниципальное озеленение</div>
+    </div>
+</section>
+
+<section>
+    <h2>Преимущества</h2>
+    <ul>
+        <li>Энергонезависимость</li>
+        <li>Стоимость в 5–6 раз ниже аналогов</li>
+        <li>Простая установка</li>
+        <li>Экологичность — отсутствие батарей</li>
+    </ul>
+</section>
+
+<section class="contact">
+    <h2>Контакты</h2>
+    <p><strong>Жилин Руслан Сергеевич</strong></p>
+    <p>Email: zhilinruslan228@gmail.com</p>
+    <p>Телефон: +7 963 388 70 17</p>
+
+    <form>
+        <input type="text" placeholder="Ваше имя">
+        <input type="email" placeholder="Email">
+        <textarea rows="4" placeholder="Сообщение"></textarea>
+        <button type="submit">Отправить</button>
+    </form>
+</section>
+
+<footer>
+    © 2025 SoulGuard · Студенческий стартап · Заявка СтС-505183
+</footer>
+
+</body>
+</html>
